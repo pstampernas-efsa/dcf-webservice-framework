@@ -193,6 +193,7 @@ public abstract class SOAPRequest {
 			try {
 				httpsConnection = avoidCertificates(url);
 			} catch (KeyManagementException | NoSuchAlgorithmException | IOException e) {
+				LOGGER.error("Error ", e);
 				e.printStackTrace();
 			}
 		}
@@ -216,10 +217,8 @@ public abstract class SOAPRequest {
 				response = soapConnection.call(request, endpoint);
 
 			} catch (MalformedURLException | ProxyConfigException e) {
-				e.printStackTrace();
-
 				LOGGER.error("ERROR OCCURRED. Proceeding without using proxy", e);
-
+				e.printStackTrace();
 				// get the response with no proxy
 				response = soapConnection.call(request, url);
 			}
@@ -430,6 +429,7 @@ public abstract class SOAPRequest {
 		try {
 			cdata = getDocument(node.getFirstChild().getNodeValue());
 		} catch (DOMException | ParserConfigurationException | SAXException | IOException e) {
+			LOGGER.error("Error while accessing cdata content of a node ", e);
 			e.printStackTrace();
 			return null;
 		}
@@ -494,6 +494,7 @@ public abstract class SOAPRequest {
 			inputStream.close();
 			handler.close();
 		} catch (IOException e) {
+			LOGGER.error("Error while handling file ", e);
 			e.printStackTrace();
 			return null;
 		}
@@ -530,6 +531,7 @@ public abstract class SOAPRequest {
 			ZipManager.unzipStream(stream, file);
 
 		} catch (IOException e) {
+			LOGGER.error("Error during unzip ", e);
 			e.printStackTrace();
 		}
 
@@ -674,6 +676,7 @@ public abstract class SOAPRequest {
 		try {
 			stream = part.getRawContent();
 		} catch (SOAPException e) {
+			LOGGER.error("Error getting the raw format ", e);
 			e.printStackTrace();
 			throw new DetailedSOAPException(e);
 		}
