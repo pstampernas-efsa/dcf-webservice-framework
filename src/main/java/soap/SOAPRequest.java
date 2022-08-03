@@ -235,6 +235,7 @@ public abstract class SOAPRequest {
 			// parse the response and get the result
 			return processResponse(response);
 		} catch (SOAPException e) {
+			LOGGER.error("ERROR OCCURRED", e);
 			// parse error codes
 			throw new DetailedSOAPException(e);
 		}
